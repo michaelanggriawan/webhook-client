@@ -55,17 +55,25 @@ function Leads({ props }) {
 
 Leads.getInitialProps = async (ctx) => {
   const userId = ctx.query.userId;
-  await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
-    method: "POST",
-  });
-
-  const response = await fetch(
-    `http://young-ridge-50048.herokuapp.com/leads/${userId}`
-  );
-  const result = await response.json();
-  return {
-    props: { ...result, userId },
+  const fetchContacts = async () => {
+    const response = await fetch(
+      `http://young-ridge-50048.herokuapp.com/leads/${userId}`
+    );
+    const result = await response.json();
+    return {
+      props: { ...result, userId },
+    };
   };
+
+  try {
+    // regist a new user
+    await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
+      method: "POST",
+    });
+    fetchContacts();
+  } catch (err) {
+    fetchContacts();
+  }
 };
 
 export default Leads;
