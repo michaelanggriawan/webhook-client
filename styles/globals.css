@@ -15,7 +15,37 @@ a {
   box-sizing: border-box;
 }
 
-#contacts td, #contacts th {
+#contacts td,
+#contacts th {
   border: 1px solid #ddd;
   padding: 8px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.webhook-url {
+  background-color: #eee;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
 }

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { io as socket } from "socket.io-client";
 
-const socket = io.connect("https://young-ridge-50048.herokuapp.com/");
+const io = socket.connect("https://young-ridge-50048.herokuapp.com/");
 
 function Leads({ props }) {
   const [contacts, setContacts] = useState(props.contacts);
 
   useEffect(() => {
-    socket.emit("join_room", props.userId);
+    io.emit("join_room", props.userId);
   }, [props.userId]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -16,34 +16,19 @@ function Leads({ props }) {
   };
 
   useEffect(() => {
-    socket.on("receive_contact", updateContact);
-    return () => socket.off("receive_contact", updateContact);
+    io.on("receive_contact", updateContact);
+    return () => io.off("receive_contact", updateContact);
   }, [updateContact]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <div style={{ marginTop: "50px" }}>
+    <div className="container">
+      <div className="mt-50 center column">
         <h1>Your Webhook URL</h1>
-        <div
-          style={{
-            backgroundColor: "#eee",
-            height: "40px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="webhook-url">
           <h3>{props.webhookUrl}</h3>
         </div>
       </div>
-      <div style={{ marginTop: "50px" }}>
+      <div className="mt-50">
         <table id="contacts">
           <tr>
             <th>No</th>
@@ -69,13 +54,13 @@ function Leads({ props }) {
 }
 
 Leads.getInitialProps = async (ctx) => {
-  const userId = ctx.query.id;
-  await fetch(`https://young-ridge-50048.herokuapp.com//leads/${userId}`, {
+  const userId = ctx.query.userId;
+  await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
     method: "POST",
   });
 
   const response = await fetch(
-    `https://young-ridge-50048.herokuapp.com/leads/${userId}`
+    `http://young-ridge-50048.herokuapp.com/leads/${userId}`
   );
   const result = await response.json();
   return {
