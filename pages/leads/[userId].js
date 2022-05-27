@@ -67,11 +67,15 @@ Leads.getInitialProps = async (ctx) => {
 
   try {
     // regist a new user
-    await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
-      method: "POST",
-    });
+    const response = await fetch(
+      `https://young-ridge-50048.herokuapp.com/leads/${userId}`,
+      {
+        method: "POST",
+      }
+    );
     return fetchContacts();
   } catch (err) {
+    console.log(err);
     return fetchContacts();
   }
 };
