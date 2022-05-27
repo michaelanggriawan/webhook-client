@@ -70,9 +70,9 @@ Leads.getInitialProps = async (ctx) => {
     await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
       method: "POST",
     });
-    fetchContacts();
+    return fetchContacts();
   } catch (err) {
-    fetchContacts();
+    return fetchContacts();
   }
 };
 
