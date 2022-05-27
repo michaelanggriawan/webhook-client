@@ -65,19 +65,11 @@ Leads.getInitialProps = async (ctx) => {
     };
   };
 
-  try {
-    // regist a new user
-    const response = await fetch(
-      `https://young-ridge-50048.herokuapp.com/leads/${userId}`,
-      {
-        method: "POST",
-      }
-    );
-    return fetchContacts();
-  } catch (err) {
-    console.log(err);
-    return fetchContacts();
-  }
+  // regist a new user
+  await fetch(`https://young-ridge-50048.herokuapp.com/leads/${userId}`, {
+    method: "POST",
+  });
+  return fetchContacts();
 };
 
 export default Leads;
